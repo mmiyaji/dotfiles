@@ -29,7 +29,7 @@ case ${UID} in
     *)
 
         precmd () {
-            _z --add "$(pwd -P)"
+#            _z --add "$(pwd -P)"
             psvar=()
             psvar[1]=$(date +'%Y %m/%d %H:%M:%S');
         # uptime
