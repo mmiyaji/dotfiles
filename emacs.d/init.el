@@ -16,7 +16,7 @@
     igrep
     zlc
     w3m
-    org-mode
+    ;; org-mode
     ;; ispell
     auto-complete
     ac-ja
