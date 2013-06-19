@@ -1,0 +1,7 @@
+#contributor : Shane Celis
+#name : eq
+#key : eq
+# --
+\begin{equation}
+	$0
+\end{equation}

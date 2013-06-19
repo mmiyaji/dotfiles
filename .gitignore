@@ -1,0 +1,92 @@
+### /Users/mmiyaji/.gitignore-boilerplates/Global/Emacs.gitignore
+
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+
+### /Users/mmiyaji/.gitignore-boilerplates/Global/OSX.gitignore
+
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+
+### /Users/mmiyaji/.gitignore-boilerplates/Global/SVN.gitignore
+
+.svn/
+
+
+### /Users/mmiyaji/.gitignore-boilerplates/Global/Linux.gitignore
+
+.*
+!.gitignore
+*~
+
+
+### /Users/mmiyaji/.gitignore-boilerplates/Python.gitignore
+
+*.py[cod]
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# emacs.d.mac
+emacs.d/auto-save-list/*
+emacs.d/elpa/*
+emacs.d/undohist/*
+emacs.d/url/*
+emacs.d/eshell/*
+
+
+!opt/*
+!.gitkeep

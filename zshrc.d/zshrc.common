@@ -1,0 +1,238 @@
+## Environment variable configuration
+#
+# LANG
+#
+export LANG=ja_JP.UTF-8
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig
+export GREP_OPTIONS='--color=auto'
+export LESS='--quit-if-one-screen --RAW-CONTROL-CHARS'
+export EDITOR='nano'
+. `brew --prefix`/etc/profile.d/z.sh
+_Z_CMD=z
+case ${UID} in
+    0)
+        LANG=C
+        ;;
+esac
+
+## Default shell configuration
+#
+# set prompt
+#
+# autoload colors
+autoload -U colors
+colors
+case ${UID} in
+    0)
+        PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') %B%{${fg[red]}%}%/#%{${reset_color}%}%b "
+        PROMPT2="%B%{${fg[red]}%}%_#%{${reset_color}%}%b "
+        SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
+        ;;
+    *)
+
+        precmd () {
+            _z --add "$(pwd -P)"
+            psvar=()
+            psvar[1]=$(date +'%Y %m/%d %H:%M:%S');
+        # uptime
+            psvar[2]=$(uptime | sed -e 's/.* up *\(.*\)/\1/' -e 's/\(.*\),.* user.*/\1/' | awk -F, '{print $1 $2}' | tr -s ' ');
+        # git branche
+            local info
+            if test -z $(git rev-parse --git-dir 2> /dev/null); then
+                info=''
+            else
+                info="[git:${$(git symbolic-ref HEAD 2> /dev/null)#refs/heads/}]"
+            fi
+            psvar[3]=$(echo -n "$info")
+            psvar[4]=$(uptime | sed 's/.*: \([0-9]\.[0-9]*\).*/\1/')
+        }
+        load_average_color () {
+            case $(uptime | sed 's/.*: \([0-9]\.[0-9]*\).*/\1/') in
+                0.[0-4]*)
+                    echo $fg[green]
+                    ;;
+                0.[5-9]*)
+                    echo $fg[cyan]
+                    ;;
+                1.*)
+                    echo $fg[blue]
+                    ;;
+                2.[0-4]*)
+                    echo $fg[yellow]
+                    ;;
+                2.[5-9]*)
+                    echo $fg[magenta]
+                    ;;
+                3.*)
+                    echo $fg[red]
+                    ;;
+                *)
+                    echo $fg_bold[red]
+                    ;;
+            esac
+        }
+        PROMPT="
+%{${fg[yellow]}%}[ %~ %{${reset_color}%}%{${fg[blue]}%}%1v ]%{${reset_color}%} %{${fg[red]}%}%3v%{${reset_color}%} %(?.%F{green}%f.%F{red}／人◕‿‿◕人＼%f)
+%{${fg[green]}%}${HOST%.*}%$%{${reset_color}%} %% "
+    #RPROMPT="%{${fg[yellow]}%}[ %/ ]%{${reset_color}%}"
+        RPROMPT="%{$(load_average_color)%}[ %2v (%4v) ]%{${reset_color}%}"
+        # RPROMPT='%{$(load_average_color)%}%~ `date +"%m%d %H%M"`%{$reset_color%}'
+        PROMPT2="%{${fg[blue]}%}%_%%%{${reset_color}%} "
+        SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
+        [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
+        PROMPT="
+%{${fg[yellow]}%}[ %~ %{${reset_color}%}%{${fg[blue]}%}%1v]%{${reset_color}%} %{${fg[red]}%}%3v%{${reset_color}%} %(?.%F{green}%f.%F{red}／人◕‿‿◕人＼%f)
+%{${fg[cyan]}%}%n@$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]')%{${reset_color}%} %% "
+        ;;
+esac
+
+## Completion configuration
+#
+# fpath=(${HOME}/.zsh/functions/Completion ${fpath})
+autoload -U compinit
+compinit
+
+# auto change directory
+#
+setopt auto_cd
+
+# auto directory pushd that you can get dirs list by cd -[tab]
+#
+setopt auto_pushd
+# auto_pushdで重複するディレクトリは記録しないようにする。
+setopt pushd_ignore_dups
+
+# command correct edition before each completion attempt
+#
+setopt correct
+
+# compacked complete list display
+#
+setopt list_packed
+#  auto_list の補完候補一覧で、ls -F のようにファイルの種別をマーク表示
+setopt list_types
+
+# no remove postfix slash of command line
+#
+setopt noautoremoveslash
+
+# no beep sound when complete list displayed
+#
+setopt nolistbeep
+
+
+## Keybind configuration
+#
+# emacs like keybind (e.x. Ctrl-a gets to line head and Ctrl-e gets
+#   to end) and something additions
+#
+bindkey -e
+bindkey "^[[1~" beginning-of-line # Home gets to line head
+bindkey "^[[4~" end-of-line # End gets to line end
+bindkey "^[[3~" delete-char # Del
+
+# historical backward/forward search with linehead string binded to ^P/^N
+#
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^p" history-beginning-search-backward-end
+bindkey "^n" history-beginning-search-forward-end
+bindkey "\\ep" history-beginning-search-backward-end
+bindkey "\\en" history-beginning-search-forward-end
+
+# reverse menu completion binded to Shift-Tab
+#
+bindkey "\e[Z" reverse-menu-complete
+
+
+## Command history configuration
+#
+HISTFILE=${HOME}/.zsh_history
+HISTSIZE=100000
+SAVEHIST=1000000
+setopt hist_ignore_dups     # ignore duplication command history list
+setopt hist_ignore_space
+setopt share_history        # share command history data
+
+# コマンドラインの引数で --prefix=/usr などの = 以降でも補完できる
+setopt magic_equal_subst
+# カッコの対応などを自動的に補完する
+setopt auto_param_keys
+# コマンドにsudoを付けてもきちんと補完出来るようにする。Ubuntuだと/etc/zsh/zshrcで設定されている。
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
+# 補完候補を矢印キーなどで選択出来るようにする。'select=3'のように指定した場合は、補完候補が3個以上ある時に選択出来るようになる。
+zstyle ':completion:*:default' menu select
+# rootは履歴を保存しない。
+if [ $UID = 0 ]; then
+	unset HISTFILE
+	SAVEHIST=0
+fi
+# apt-getやdpkgなどのキャッシュ
+if [ -d ~/.zsh/cache ]; then
+    zstyle ':completion:*' use-cache yes
+    zstyle ':completion:*' cache-path ~/.zsh/cache
+fi
+
+## zsh editor
+#
+autoload zed
+
+
+## Prediction configuration
+#
+# autoload predict-on
+# predict-on
+
+## terminal configuration#
+case "${TERM}" in
+    screen)
+        TERM
+        =xterm
+        ;;
+esac
+
+case "${TERM}" in
+    xterm|xterm-color)
+        export LSCOLORS=exfxcxdxbxegedabagacad
+        export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+        zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
+        ;;
+    kterm-color)
+        stty erase '^H'
+        export LSCOLORS=exfxcxdxbxegedabagacad
+        export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+        zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
+        ;;
+    kterm)
+        stty erase '^H'
+        ;;
+    cons25)
+        unset LANG
+        export LSCOLORS=ExFxCxdxBxegedabagacad
+        export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+        zstyle ':completion:*' list-colors 'di=;34;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
+        ;;
+    jfbterm-color)
+        export LSCOLORS=gxFxCxdxBxegedabagacad
+        export LS_COLORS='di=01;36:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+        zstyle ':completion:*' list-colors 'di=;36;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
+        ;;
+esac
+
+# set terminal title including current directory
+#
+case "${TERM}" in
+    xterm|xterm-color|kterm|kterm-color)
+        precmd() {
+            echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
+        }
+        ;;
+esac
+
+
+## load user .zshrc configuration file
+#
+[ -f ${HOME}/.zshrc.d/zshrc.mine ] && source ${HOME}/.zshrc.d/zshrc.mine
+[ -f ${HOME}/.zshrc.d/zshrc.alias ] && source ${HOME}/.zshrc.d/zshrc.alias
+[ -f ${HOME}/.zshrc.d/zshrc.local ] && source ${HOME}/.zshrc.d/zshrc.local

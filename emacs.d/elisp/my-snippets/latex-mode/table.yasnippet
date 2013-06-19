@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor : Mads D. Kristensen <madsdk@gmail.com>
+# key: table
+# group: environments
+# name : \begin{table} ... \end{table}
+# --
+\begin{table}[htbp]
+  \caption{${1:caption}}
+  \label{${2:${1:label}}}
+  \begin{center}
+  \begin{tabular}{|l|c|r|} 
+  \hline
+  $3 & ${4:$3} & ${5:$4} \\\\ \hline
+  \end{tabular}
+  \end{center}
+\end{table}

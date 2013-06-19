@@ -1,0 +1,15 @@
+fpath=(~/.zshrc.d/functions/ $fpath)
+fpath=(/usr/local/share/zsh-completions $fpath)
+export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/opt/X11/lib/pkgconfig
+show_buffer_stack() {
+  POSTDISPLAY="
+  stack: $LBUFFER"
+  zle push-line-or-edit
+}
+zle -N show_buffer_stack
+#export _Z_CMD=z
+#source /usr/local/etc/profile.d/z.sh
+#precmd() {
+#  _z --add "$(pwd -P)"
+#}
+#alias z="_z"

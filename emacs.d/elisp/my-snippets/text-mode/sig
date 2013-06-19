@@ -1,0 +1,9 @@
+# name: (user's signature)
+# key: sig
+# --
+"""
+`(file-name-nondirectory (buffer-file-name))`
+
+Created by ${1:mmiyaji} on `(format-time-string "%Y-%m-%d")`.
+Copyright (c) `(format-time-string "%Y")`  ${2:ruhenheim.org}. All rights reserved.
+"""

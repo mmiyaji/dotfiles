@@ -1,0 +1,83 @@
+setopt complete_aliases
+# aliased ls needs if file/dir completions work
+
+case "${OSTYPE}" in
+    freebsd*|darwin*)
+        alias ls="ls -GFh"
+        alias keyoff="sudo kextunload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/"
+        alias keyon="sudo kextload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/"
+        [ -f /Applications/Emacs.app/Contents/MacOS/Emacs ] && alias -g emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+        export PATH=/opt/X11/bin:$PATH
+
+        alias cot='open -a CotEditor'
+        ;;
+    linux*|kfreebsd*)
+        alias ls="ls --color"
+        alias open="gnome-open"
+        ;;
+esac
+
+alias su="su -l"
+#alias grep='grep -i -r -H -n -I'
+alias nano='nano -k -w -i -S'
+alias less='less -M'
+alias em='emacsclient -nw'
+alias delsvn='rm -rf `find ./ -type d -name .svn ! -regex \.svn/. -print`'
+alias deldstore='find . -name ".DS_Store" -print -exec rm -r {} ";" ; find . -name ._* -exec rm -r {} ";"'
+alias chfree='find . -type f -print | xargs chmod 777'
+
+#ssh
+alias capture='import /home/mmiyaji/Dropbox/workspace/2012/captures/`env LC_ALL=en date +%Y%m%d%H%M%S`.png'
+alias utfs='nkf -g * | grep -v BI | awk -F":" "{ print $1 }" && find . -type f ! -regex "\.[^img|image|imgs|IMGS]/." -regex ".*[^pdf|PDF|dvi]"  -ok nkf -w --overwrite {} \;'
+function mp4tomp3(){
+    ffmpeg -i $1 -ab 128 $2
+}
+
+function lsall(){
+    ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//–/g' -e 's/^/ /' -e 's/-/|/'
+}
+
+function glconfig(){
+    wget -q -O - http://checkip.dyndns.org | sed 's/.*Address\:\s\(.*\)<\/body>.*/\1/g'
+}
+
+function zipub(){
+    zip -Xr9D $1.epub mimetype *
+}
+
+function mailer(){
+    wget -q -O - --post-data=body="${1}" http://m-codes.appspot.com/mailer
+}
+tsend(){
+	tmux capture-pane -S -100; tmux show-buffer | ~/Dropbox/config/dotfile/mailer.py
+}
+function google() {
+    local str opt
+    if [ $ != 0 ]; then
+	    for i in $*; do
+		    str="$str+$i"
+	    done
+	    str=`echo $str | sed 's/^\+//'`
+	    opt='search?num=50&hl=ja&lr=lang_ja'
+	    opt="${opt}&q=${str}"
+    fi
+    w3m http://www.google.co.jp/$opt
+}
+
+function ccl(){
+ while true;
+  do
+   clear
+   uptime
+   date
+   echo
+   $*
+#   echo "Press any key to escape"
+   sleep 2
+  done
+}
+
+## create emacs env file
+perl -wle \
+    'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
+        PATH > ~/.emacs.d/shellenv.el

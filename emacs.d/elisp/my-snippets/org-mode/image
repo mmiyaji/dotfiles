@@ -1,0 +1,6 @@
+# name: initialize
+# key: init
+# --
+#+CAPTION: ${1:cap}
+#+ATTR_HTML: alt="image"
+[[file:/`(file-name-nondirectory (buffer-file-name))`]]

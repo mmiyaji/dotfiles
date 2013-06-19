@@ -1,0 +1,10 @@
+# name: graph
+# key: graph
+# --
+from pygraphviz import *
+graph = AGraph(directed=False)
+graph.add_node("1")
+graph.add_node("2")
+graph.add_edge("1", "2")
+graph.layout(prog='dot')
+graph.draw('${1:pyg.png}')

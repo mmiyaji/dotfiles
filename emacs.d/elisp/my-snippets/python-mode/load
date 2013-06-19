@@ -1,0 +1,15 @@
+# name: load
+# key: load
+# --
+def load_csv(path):
+    """
+    Arguments:
+    - `path`:
+    """
+    result = []
+    f = open(path)
+    line = f.readline()
+    while line:
+        result.append(line.strip().split(","))
+        line = f.readline()
+    return result
