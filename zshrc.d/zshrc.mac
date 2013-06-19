@@ -1,3 +1,5 @@
+. `brew --prefix`/etc/profile.d/z.sh
+_Z_CMD=z
 fpath=(~/.zshrc.d/functions/ $fpath)
 fpath=(/usr/local/share/zsh-completions $fpath)
 export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/opt/X11/lib/pkgconfig
