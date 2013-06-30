@@ -13,7 +13,7 @@ case ${OSTYPE} in
         [ -f ${HOME}/.zshrc.d/zshrc.mac ] && source ${HOME}/.zshrc.d/zshrc.mac
      ;;
      *)
-        export PATH=$HOME/opt/sbin:$HOME/opt/bin:/opt/local/bin:/usr/local/bin:$PATH:
+        export PATH=$HOME/opt/sbin:$HOME/opt/bin:/opt/local/bin:/usr/local/bin:/usr/bin:$PATH
      ;;
 esac
 

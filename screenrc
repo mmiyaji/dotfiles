@@ -1,0 +1,41 @@
+# 現在の背景色で消去する
+defbce "on"
+# 太字には明るい色を使う(^[はvimでC-v ESCで入力する)
+attrcolor b "^["
+# 256色表示設定
+term xterm-256color
+# スクロールバッファは最大10000行にする
+defscrollback 10000
+# 別画面サポート。Vimやless使うときに便利
+altscreen on
+# コマンドキーをCtrl+Zにする
+#escape ^Zz
+# ビジュアルベル（画面全体が点滅する）を切る
+vbell off
+# ベルの時はメッセージ（＋音）を出す(^GはvimでC-v C-gで入力する)
+#bell_msg "Bell in window %^G"
+# 端末が落ちたら自動的にデタッチする
+autodetach on
+# 新しいウィンドウを生成するときのコマンド
+shell $SHELL
+# スタートアップメッセージを消す
+startup_message off
+# ログファイルのファイル名
+logfile "$HOME/.screen/screen-%Y%m%d-%n.log"
+# 標準でログをとる
+deflog on
+# ウィンドウのタイトル指定
+shelltitle '$ |zsh'
+#メッセージを表示する時間(秒単位)
+msgwait 5
+#次のメッセージを表示するまでの遅延時間(秒単位)
+msgminwait 1
+
+# hardstatus and caption
+hardstatus on
+hardstatus alwayslastline '%{= .b}%H%{-} %L=%-w%45L>%{=u b.}%n %t%{-}%+w %-17<%=%m/%d %02c:%s'
+caption always '%?%F%{= bw}%:%{= wk}%?%2n%f%07=%t%='
+sorendition '+r .b'
+
+# Prefixキーの設定
+escape ^z^z

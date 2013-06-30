@@ -86,7 +86,7 @@ emacs.d/elpa/*
 emacs.d/undohist/*
 emacs.d/url/*
 emacs.d/eshell/*
-
+emacs.d/shellenv.el
 
 !opt/*
 !.gitkeep

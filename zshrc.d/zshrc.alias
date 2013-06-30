@@ -15,6 +15,10 @@ case "${OSTYPE}" in
         alias ls="ls --color"
         alias open="gnome-open"
         ;;
+     cygwin)
+     	alias ls="ls --color"
+     	alias open="cygstart"
+     	;;
 esac
 
 alias su="su -l"
