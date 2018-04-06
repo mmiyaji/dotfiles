@@ -2,7 +2,7 @@
 
 LINKS=ln
 OPTION=-s
-DOTDIR=~/dotfile/
+DOTDIR=~/dotfiles/
 TARGETDIR=~/
 #${LINKS} ${OPTION_SYM} ${DOTDIR}
 ${LINKS} ${OPTION} ${DOTDIR}zshrc.mac ${TARGETDIR}.zshrc

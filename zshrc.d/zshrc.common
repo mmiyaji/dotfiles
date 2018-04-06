@@ -4,7 +4,7 @@
 #
 export LANG=ja_JP.UTF-8
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig
-export GREP_OPTIONS='--color=auto'
+#export GREP_OPTIONS='--color=auto'
 export LESS='--quit-if-one-screen --RAW-CONTROL-CHARS'
 export EDITOR='nano'
 case ${UID} in
@@ -36,11 +36,11 @@ case ${UID} in
         #    psvar[2]=$(uptime | sed -e 's/.* up *\(.*\)/\1/' -e 's/\(.*\),.* user.*/\1/' | awk -F, '{print $1 $2}' | tr -s ' ');
         # git branche
             local info
-            if test -z $(git rev-parse --git-dir 2> /dev/null); then
-                info=''
-            else
-                info="[git:${$(git symbolic-ref HEAD 2> /dev/null)#refs/heads/}]"
-            fi
+        #    if test -z $(git rev-parse --git-dir 2> /dev/null); then
+        #        info=''
+        #    else
+        #        info="[git:${$(git symbolic-ref HEAD 2> /dev/null)#refs/heads/}]"
+        #    fi
             psvar[3]=$(echo -n "$info")
         #    psvar[4]=$(uptime | sed 's/.*: \([0-9]\.[0-9]*\).*/\1/')
         }
@@ -87,7 +87,7 @@ esac
 ## Completion configuration
 #
 # fpath=(${HOME}/.zsh/functions/Completion ${fpath})
-autoload -U compinit
+autoload -Uz compinit
 compinit
 
 # auto change directory
