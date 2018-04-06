@@ -14,6 +14,7 @@ case ${OSTYPE} in
      ;;
      *)
         export PATH=$HOME/opt/sbin:$HOME/opt/bin:/opt/local/bin:/usr/local/bin:/usr/bin:$PATH
+	# export PATH=$HOME/opt/sbin:$HOME/opt/bin:/opt/local/bin:/usr/bin:/usr/local/bin:$PATH
      ;;
 esac
 

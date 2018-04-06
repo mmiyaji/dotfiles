@@ -70,7 +70,7 @@ case ${UID} in
             esac
         }
         PROMPT="
-%{${fg[yellow]}%}[ %~ %{${reset_color}%}%{${fg[blue]}%}%1v ]%{${reset_color}%} %{${fg[red]}%}%3v%{${reset_color}%} %(?.%F{green}%f.%F{red}／人◕‿‿◕人＼%f)
+%{${fg[yellow]}%}[ %~ %{${reset_color}%}%{${fg[cyan]}%}%1v ]%{${reset_color}%} %{${fg[red]}%}%3v%{${reset_color}%} %(?.%F{green}%f.%F{red}／人◕‿‿◕人＼%f)
 %{${fg[green]}%}${HOST%.*}%$%{${reset_color}%} %% "
     #RPROMPT="%{${fg[yellow]}%}[ %/ ]%{${reset_color}%}"
        # RPROMPT="%{$(load_average_color)%}[ %2v (%4v) ]%{${reset_color}%}"
@@ -79,7 +79,7 @@ case ${UID} in
         SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
         [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
         PROMPT="
-%{${fg[yellow]}%}[ %~ %{${reset_color}%}%{${fg[blue]}%}%1v]%{${reset_color}%} %{${fg[red]}%}%3v%{${reset_color}%} %(?.%F{green}%f.%F{red}／人◕‿‿◕人＼%f)
+%{${fg[yellow]}%}[ %~ %{${reset_color}%}%{${fg[cyan]}%}%1v]%{${reset_color}%} %{${fg[red]}%}%3v%{${reset_color}%} %(?.%F{green}%f.%F{red}／人◕‿‿◕人＼%f)
 %{${fg[cyan]}%}%n@$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]')%{${reset_color}%} %% "
         ;;
 esac
